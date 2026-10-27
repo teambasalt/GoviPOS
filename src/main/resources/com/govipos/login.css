@@ -1,0 +1,21 @@
+.root { -fx-font-family: "Arial"; -fx-font-size: 14px; -fx-background-color: white; }  //login function css
+.brand-panel { -fx-background-color: linear-gradient(to bottom right, #005742, #08b888); }
+.form-panel { -fx-background-color: #ffffff; }
+.headline { -fx-text-fill: white; -fx-font-size: 32px; -fx-font-weight: bold; }
+.welcome { -fx-text-fill: #00513e; -fx-font-size: 24px; -fx-font-weight: bold; -fx-padding: 0 0 10 0; }
+.field-label { -fx-text-fill: #188165; -fx-font-size: 10px; -fx-font-weight: bold; }
+.text-field, .combo-box, .password-box { -fx-background-color: #f3faf7; -fx-border-color: #bdeedc; -fx-border-radius: 10; -fx-background-radius: 10; -fx-pref-height: 42; -fx-text-fill: #216351; }
+.text-field { -fx-padding: 9 14; -fx-prompt-text-fill: #73988b; }
+.combo-box .list-cell { -fx-text-fill: #538575; -fx-padding: 9 14; }
+.combo-box .arrow { -fx-background-color: #0aa77b; }
+.password-box .text-field { -fx-background-color: transparent; -fx-border-color: transparent; }
+.eye { -fx-background-color: transparent; -fx-text-fill: #00a66e; -fx-cursor: hand; -fx-pref-height: 40; }
+.check-box { -fx-font-size: 11px; -fx-text-fill: #427d68; }
+.check-box .box { -fx-background-color: white; -fx-border-color: #14b88d; -fx-border-radius: 3; }
+.check-box:selected .box { -fx-background-color: #0bb287; }
+.check-box:selected .mark { -fx-background-color: white; }
+.sign-in { -fx-background-color: linear-gradient(to right, #009e70, #11bba9); -fx-text-fill: white; -fx-background-radius: 9; -fx-pref-height: 46; -fx-cursor: hand; }
+.sign-in:hover { -fx-opacity: .9; }
+.sign-in:focused { -fx-border-color: #006b50; -fx-border-radius: 9; }
+
+
