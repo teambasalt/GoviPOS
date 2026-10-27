@@ -15,7 +15,9 @@ public final class login extends Application {
     private final PasswordField password = new PasswordField();
     private final TextField visiblePassword = new TextField();
     private final Label headline = new Label("Log in to the account");
+    // Other roles use a second login presentation; Admin goes straight to the dashboard.
     private boolean roleLogin;
+    // Apply a command-line starting screen only once, so sign-out can return to login.
     private boolean startupRouteConsumed;
 
     @Override public void start(Stage stage) {
@@ -29,6 +31,7 @@ public final class login extends Application {
         roles.setMaxWidth(Double.MAX_VALUE);
         username.setPromptText("Enter email");
         password.setPromptText("••••••••");
+        // Both password controls share one value, so toggling visibility keeps what was typed.
         visiblePassword.textProperty().bindBidirectional(password.textProperty());
         visiblePassword.setVisible(false);
         visiblePassword.setManaged(false);
@@ -71,6 +74,7 @@ public final class login extends Application {
         right.setPadding(new Insets(45));
         right.getStyleClass().add("form-panel");
         GridPane root = new GridPane();
+        // Percentage widths keep the green and white panels evenly split on resize.
         ColumnConstraints half = new ColumnConstraints(); half.setPercentWidth(50);
         ColumnConstraints otherHalf = new ColumnConstraints(); otherHalf.setPercentWidth(50);
         root.getColumnConstraints().addAll(half, otherHalf);
@@ -95,16 +99,36 @@ public final class login extends Application {
         scene.getStylesheets().add(getClass().getResource("login.css").toExternalForm());
         stage.setTitle("GoviPOS"); stage.setMinWidth(800); stage.setMinHeight(520);
         stage.setScene(scene); stage.show();
-        // Optional startup route supports reviewing the real JavaFX dashboard directly.
-        if (!startupRouteConsumed && getParameters().getRaw().contains("--dashboard")) {
-            stage.setScene(AdminDashboard.create(stage, () -> start(stage)));
+        // Preview arguments let each screen open directly without going through login.
+        if (!startupRouteConsumed) {
+            Runnable hub = () -> stage.setScene(AdminDashboard.create(stage, () -> start(stage)));
+            for (String route : getParameters().getRaw()) {
+                switch (route) {
+                    case "--dashboard" -> hub.run();
+                    case "--create-branch" -> stage.setScene(AdminScreens.createBranch(stage, hub));
+                    case "--remove-branch" -> stage.setScene(AdminScreens.removeBranch(stage, hub));
+                    case "--assign-branch" -> stage.setScene(AdminScreens.assignBranch(stage, hub));
+                    case "--create-account" -> stage.setScene(AdminScreens.createAccount(stage,
+                            () -> stage.setScene(AdminScreens.assignBranch(stage, hub))));
+                    default -> { /* Unrecognised preview options leave the login visible. */ }
+                }
+            }
         }
         startupRouteConsumed = true;
+        if (getParameters().getRaw().contains("--preview-all")) {
+            javafx.application.Platform.runLater(() -> ScreenPreviews.export(stage,
+                    () -> stage.setScene(AdminDashboard.create(stage, () -> start(stage)))));
+        }
         String preview = System.getProperty("govipos.preview");
         if (preview != null) {
+            // Wait until the scene is attached before laying out and capturing its controls.
             javafx.application.Platform.runLater(() -> {
                 javafx.scene.Parent previewRoot = stage.getScene().getRoot();
-                previewRoot.applyCss(); previewRoot.layout();
+                previewRoot.applyCss();
+                double previewWidth = Double.parseDouble(System.getProperty("govipos.preview.width", "1280"));
+                double previewHeight = Double.parseDouble(System.getProperty("govipos.preview.height", "720"));
+                previewRoot.resize(previewWidth, previewHeight);
+                previewRoot.layout();
                 javafx.scene.image.WritableImage image = previewRoot.snapshot(null, null);
                 java.awt.image.BufferedImage png = new java.awt.image.BufferedImage(
                         (int) image.getWidth(), (int) image.getHeight(), java.awt.image.BufferedImage.TYPE_INT_ARGB);
@@ -118,6 +142,7 @@ public final class login extends Application {
             });
         }
         scene.widthProperty().addListener((observable, before, width) -> {
+            // Give the form more room on smaller desktop windows by reducing the outer padding.
             double padding = width.doubleValue() < 1000 ? 30 : 60;
             left.setPadding(new Insets(padding)); right.setPadding(new Insets(padding * .75));
         });

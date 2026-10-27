@@ -24,7 +24,7 @@ public final class AdminDashboard {
         local.getStyleClass().add("local-badge");
         local.setOnAction(event -> logout.run());
         Label online = label("● Online", "online-badge");
-        // Display name is reference artwork text, not a credential or signed-in identity.
+        // This display name comes from the design; no user account is loaded here.
         VBox account = new VBox(2, label("Senaka Bandara", "account-name"), label("Admin", "account-caption"));
         account.setAlignment(Pos.CENTER_RIGHT);
         Button profile = new Button("A");
@@ -48,9 +48,9 @@ public final class AdminDashboard {
         Label title = label("Admin Central Management Hub", "dashboard-title");
         Label section = label("Primary Operational Controls", "section-title");
         GridPane controls = columns();
-        controls.add(operation(owner, "Add Branch", "Add Branch", "branch", false), 0, 0);
-        controls.add(operation(owner, "Remove Branch", "Open Branch Removal Console", "remove", true), 1, 0);
-        controls.add(operation(owner, "Assign Roles", "Manage Role Allocations", "roles", false), 2, 0);
+        controls.add(operation(owner, "Add Branch", "Add Branch", "branch", false, logout), 0, 0);
+        controls.add(operation(owner, "Remove Branch", "Open Branch Removal Console", "remove", true, logout), 1, 0);
+        controls.add(operation(owner, "Assign Roles", "Manage Role Allocations", "roles", false, logout), 2, 0);
         VBox content = new VBox(20, title, statistics, section, controls);
         content.setPadding(new Insets(26, 30, 40, 30));
         VBox.setVgrow(statistics, Priority.ALWAYS); VBox.setVgrow(controls, Priority.ALWAYS);
@@ -74,6 +74,7 @@ public final class AdminDashboard {
     }
 
     private static VBox metric(String category, String caption, String value, String status, String detail, double progress) {
+        // Let the gap grow so the status and progress bar stay near the bottom of each card.
         Region space = new Region(); VBox.setVgrow(space, Priority.ALWAYS);
         ProgressBar bar = new ProgressBar(progress); bar.setMaxWidth(Double.MAX_VALUE);
         VBox card = new VBox(5, label(category, "metric-category"), label(caption, "metric-caption"),
@@ -82,41 +83,29 @@ public final class AdminDashboard {
         return card;
     }
 
-    private static VBox operation(Stage owner, String title, String action, String symbol, boolean destructive) {
+    private static VBox operation(Stage owner, String title, String action, String symbol, boolean destructive, Runnable logout) {
         StackPane tile = new StackPane(icon(symbol)); tile.getStyleClass().add("operation-icon");
         tile.setMaxSize(42, 42); tile.setMinSize(42, 42);
         Region space = new Region(); VBox.setVgrow(space, Priority.ALWAYS);
         Button button = new Button(action + "   →"); button.setMaxWidth(Double.MAX_VALUE);
         button.setWrapText(true);
         button.getStyleClass().add(destructive ? "danger-action" : "primary-action");
-        // Dialogs are presentation-only: no validation, persistence, or server calls.
-        button.setOnAction(event -> showPanel(owner, title));
+        // Each screen gets the same return callback, including the current sign-out action.
+        button.setOnAction(event -> {
+            Runnable back = () -> {
+                owner.setScene(create(owner, logout));
+                owner.setTitle("GoviPOS — Admin Dashboard");
+            };
+            owner.setScene(switch (title) {
+                case "Add Branch" -> AdminScreens.createBranch(owner, back);
+                case "Remove Branch" -> AdminScreens.removeBranch(owner, back);
+                default -> AdminScreens.assignBranch(owner, back);
+            });
+        });
         VBox card = new VBox(18, tile, label(title, "operation-title"), space, button);
         card.setMinHeight(218); card.getStyleClass().add("operation-card");
         if (destructive) card.getStyleClass().add("remove-card");
         return card;
-    }
-
-    private static void showPanel(Stage owner, String title) {
-        Dialog<Void> dialog = new Dialog<>(); dialog.initOwner(owner); dialog.setTitle(title);
-        dialog.setHeaderText(title);
-        VBox fields = new VBox(12); fields.setPadding(new Insets(12)); fields.setPrefWidth(350);
-        if (title.equals("Add Branch")) {
-            fields.getChildren().addAll(new Label("Branch name"), new TextField(), new Label("Location"), new TextField());
-        } else if (title.equals("Remove Branch")) {
-            ComboBox<String> branches = new ComboBox<>(); branches.getItems().addAll("Colombo", "Kandy", "Galle");
-            branches.setPromptText("Select branch"); branches.setMaxWidth(Double.MAX_VALUE);
-            fields.getChildren().addAll(new Label("Branch"), branches);
-        } else {
-            TextField user = new TextField(); user.setPromptText("Username");
-            ComboBox<String> role = new ComboBox<>(); role.getItems().addAll("Admin", "Cashier", "Branch Manager", "Inventory Officer");
-            role.setPromptText("Select role"); role.setMaxWidth(Double.MAX_VALUE);
-            fields.getChildren().addAll(new Label("User"), user, new Label("Role"), role);
-        }
-        dialog.getDialogPane().setContent(fields);
-        dialog.getDialogPane().getButtonTypes().addAll(new ButtonType("Done", ButtonBar.ButtonData.OK_DONE), ButtonType.CANCEL);
-        dialog.getDialogPane().getStylesheets().add(AdminDashboard.class.getResource("dashboard.css").toExternalForm());
-        dialog.showAndWait();
     }
 
     private static Label label(String text, String style) {
