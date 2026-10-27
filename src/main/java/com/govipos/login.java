@@ -54,7 +54,7 @@ public final class login extends Application {
         VBox userField = new VBox(6, userLabel, username);
         CheckBox remember = new CheckBox("Remember this workstation");
         remember.setSelected(true);
-        Button signIn = new Button("Sign in  ›");
+        Button signIn = new Button("Login  ›");
         signIn.getStyleClass().add("sign-in");
         signIn.setMaxWidth(Double.MAX_VALUE);
         signIn.setDefaultButton(true);
@@ -78,16 +78,17 @@ public final class login extends Application {
         root.getRowConstraints().add(row);
         root.add(left, 0, 0); root.add(right, 1, 0);
         signIn.setOnAction(event -> {
-            if (!roleLogin && roles.getValue() != null) {
+            // Demo routing only: Admin opens immediately without checking credentials.
+            if ("Admin".equals(roles.getValue())) {
+                stage.setScene(AdminDashboard.create(stage, () -> start(stage)));
+                stage.setTitle("GoviPOS — Admin Dashboard");
+            } else if (!roleLogin && roles.getValue() != null) {
                 roleLogin = true;
                 headline.setText("Navigate to " + roles.getValue() + " Dashboard");
                 welcome.setVisible(false); welcome.setManaged(false);
                 roleField.setVisible(false); roleField.setManaged(false);
                 remember.setVisible(false); remember.setManaged(false);
                 userLabel.setText("USERNAME");
-            } else if (roleLogin && "Admin".equals(roles.getValue())) {
-                stage.setScene(AdminDashboard.create(stage, () -> start(stage)));
-                stage.setTitle("GoviPOS — Admin Dashboard");
             }
         });
         Scene scene = new Scene(root, 1280, 720);

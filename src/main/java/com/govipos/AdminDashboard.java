@@ -15,14 +15,17 @@ public final class AdminDashboard {
     public static Scene create(Stage owner, Runnable logout) {
         owner.setMinHeight(680);
         Label brand = label("GoviPOS", "brand-name");
-        VBox wordmark = new VBox(0, brand, label("AGRICULTURAL POS", "brand-caption"));
+        VBox wordmark = new VBox(0, brand, label("AGROHUB SUITE", "brand-caption"));
         HBox identity = new HBox(10, icon("leaf"), wordmark);
         identity.setAlignment(Pos.CENTER_LEFT);
         identity.getStyleClass().add("identity");
         Region spacer = new Region(); HBox.setHgrow(spacer, Priority.ALWAYS);
-        Label local = label("Local  ◉", "local-badge");
+        Button local = new Button("Change role");
+        local.getStyleClass().add("local-badge");
+        local.setOnAction(event -> logout.run());
         Label online = label("● Online", "online-badge");
-        VBox account = new VBox(2, label("Hello, Admin", "account-name"), label("Central Management", "account-caption"));
+        // Display name is reference artwork text, not a credential or signed-in identity.
+        VBox account = new VBox(2, label("Senaka Bandara", "account-name"), label("Admin", "account-caption"));
         account.setAlignment(Pos.CENTER_RIGHT);
         Button profile = new Button("A");
         profile.getStyleClass().add("avatar");
@@ -38,16 +41,16 @@ public final class AdminDashboard {
 
         // Equal-width columns preserve the three-card Figma composition on desktop.
         GridPane statistics = columns();
-        statistics.add(metric("INFRASTRUCTURE", "OVERVIEW", "98 Branches", "STATUS", "All branches active", .96), 0, 0);
-        statistics.add(metric("TERMINALS", "OVERVIEW", "94 POS\nLanes", "STATUS", "Online", .88), 1, 0);
-        statistics.add(metric("USER MANAGEMENT", "OVERVIEW", "142\nAccounts", "STATUS", "All roles", .96), 2, 0);
+        statistics.add(metric("ACTIVE REGIONAL", "BRANCHES", "18 Branches", "9 Agricultural", "Provinces", .96), 0, 0);
+        statistics.add(metric("LICENSED POS", "TERMINALS", "64 POS\nLanes", "All 18", "Branches", .88), 1, 0);
+        statistics.add(metric("SYSTEM USERS & ROLES", "", "142\nAccounts", "Active Staff Allocations", "4 Tiers Defined", .96), 2, 0);
         GridPane.setVgrow(statistics, Priority.ALWAYS);
         Label title = label("Admin Central Management Hub", "dashboard-title");
         Label section = label("Primary Operational Controls", "section-title");
         GridPane controls = columns();
-        controls.add(operation(owner, "Add Branch", "Add New", "branch", false), 0, 0);
-        controls.add(operation(owner, "Remove Branch", "Select Branch to Remove", "remove", true), 1, 0);
-        controls.add(operation(owner, "Assign Roles", "Manage Authorization", "roles", false), 2, 0);
+        controls.add(operation(owner, "Add Branch", "Add Branch", "branch", false), 0, 0);
+        controls.add(operation(owner, "Remove Branch", "Open Branch Removal Console", "remove", true), 1, 0);
+        controls.add(operation(owner, "Assign Roles", "Manage Role Allocations", "roles", false), 2, 0);
         VBox content = new VBox(20, title, statistics, section, controls);
         content.setPadding(new Insets(26, 30, 40, 30));
         VBox.setVgrow(statistics, Priority.ALWAYS); VBox.setVgrow(controls, Priority.ALWAYS);
@@ -83,7 +86,8 @@ public final class AdminDashboard {
         StackPane tile = new StackPane(icon(symbol)); tile.getStyleClass().add("operation-icon");
         tile.setMaxSize(42, 42); tile.setMinSize(42, 42);
         Region space = new Region(); VBox.setVgrow(space, Priority.ALWAYS);
-        Button button = new Button(action + "   ›"); button.setMaxWidth(Double.MAX_VALUE);
+        Button button = new Button(action + "   →"); button.setMaxWidth(Double.MAX_VALUE);
+        button.setWrapText(true);
         button.getStyleClass().add(destructive ? "danger-action" : "primary-action");
         // Dialogs are presentation-only: no validation, persistence, or server calls.
         button.setOnAction(event -> showPanel(owner, title));
