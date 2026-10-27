@@ -8,7 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-/** Desktop frontend. Authentication must be supplied by the application backend. */
+/** Frontend-only navigation; fields never authenticate or persist credentials. */
 public final class login extends Application {
     private final ComboBox<String> roles = new ComboBox<>();
     private final TextField username = new TextField();
@@ -16,8 +16,14 @@ public final class login extends Application {
     private final TextField visiblePassword = new TextField();
     private final Label headline = new Label("Log in to the account");
     private boolean roleLogin;
+    private boolean startupRouteConsumed;
 
     @Override public void start(Stage stage) {
+        // Rebuilding the login on sign-out resets all transient presentation state.
+        roleLogin = false;
+        headline.setText("Log in to the account");
+        roles.getItems().clear();
+        username.clear(); password.clear(); roles.setValue(null);
         roles.getItems().addAll("Admin", "Cashier", "Branch Manager", "Inventory Officer");
         roles.setPromptText("Select role");
         roles.setMaxWidth(Double.MAX_VALUE);
@@ -79,17 +85,26 @@ public final class login extends Application {
                 roleField.setVisible(false); roleField.setManaged(false);
                 remember.setVisible(false); remember.setManaged(false);
                 userLabel.setText("USERNAME");
+            } else if (roleLogin && "Admin".equals(roles.getValue())) {
+                stage.setScene(AdminDashboard.create(stage, () -> start(stage)));
+                stage.setTitle("GoviPOS — Admin Dashboard");
             }
         });
         Scene scene = new Scene(root, 1280, 720);
         scene.getStylesheets().add(getClass().getResource("login.css").toExternalForm());
         stage.setTitle("GoviPOS"); stage.setMinWidth(800); stage.setMinHeight(520);
         stage.setScene(scene); stage.show();
+        // Optional startup route supports reviewing the real JavaFX dashboard directly.
+        if (!startupRouteConsumed && getParameters().getRaw().contains("--dashboard")) {
+            stage.setScene(AdminDashboard.create(stage, () -> start(stage)));
+        }
+        startupRouteConsumed = true;
         String preview = System.getProperty("govipos.preview");
         if (preview != null) {
             javafx.application.Platform.runLater(() -> {
-                root.applyCss(); root.layout();
-                javafx.scene.image.WritableImage image = root.snapshot(null, null);
+                javafx.scene.Parent previewRoot = stage.getScene().getRoot();
+                previewRoot.applyCss(); previewRoot.layout();
+                javafx.scene.image.WritableImage image = previewRoot.snapshot(null, null);
                 java.awt.image.BufferedImage png = new java.awt.image.BufferedImage(
                         (int) image.getWidth(), (int) image.getHeight(), java.awt.image.BufferedImage.TYPE_INT_ARGB);
                 for (int y = 0; y < png.getHeight(); y++) {

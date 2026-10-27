@@ -1,4 +1,5 @@
-.root { -fx-font-family: "Arial"; -fx-font-size: 14px; -fx-background-color: white; }  //login function css
+/* Login presentation styles. */
+.root { -fx-font-family: "Arial"; -fx-font-size: 14px; -fx-background-color: white; }
 .brand-panel { -fx-background-color: linear-gradient(to bottom right, #005742, #08b888); }
 .form-panel { -fx-background-color: #ffffff; }
 .headline { -fx-text-fill: white; -fx-font-size: 32px; -fx-font-weight: bold; }

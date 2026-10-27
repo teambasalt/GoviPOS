@@ -1,0 +1,32 @@
+/* The reference uses a continuous green surface and two three-column card rows. */
+.dashboard { -fx-font-family: "Arial"; -fx-background-color: linear-gradient(to bottom right, #087952, #06ba88); }
+.dashboard-header { -fx-background-color: #007453; -fx-border-color: transparent transparent #62c2a3 transparent; -fx-border-width: 0 0 1 0; }
+.identity { -fx-padding: 0 24 0 0; -fx-border-color: transparent #4fa78d transparent transparent; }
+.brand-name { -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 18; }
+.brand-caption { -fx-text-fill: #ccf7e9; -fx-font-size: 7; }
+.identity .line-icon { -fx-stroke: #fff; }
+.local-badge { -fx-text-fill: #e0fff3; -fx-background-color: #21b185; -fx-padding: 5 12; -fx-background-radius: 4; -fx-font-size: 11; }
+.online-badge { -fx-text-fill: #056d4d; -fx-background-color: #d2ffe7; -fx-padding: 4 12; -fx-background-radius: 20; -fx-font-size: 10; }
+.account-name { -fx-text-fill: white; -fx-font-size: 11; }
+.account-caption { -fx-text-fill: #a9ddc9; -fx-font-size: 8; }
+.avatar { -fx-background-color: #043e33; -fx-text-fill: #b5f9db; -fx-background-radius: 24; -fx-min-width: 30; -fx-min-height: 30; -fx-cursor: hand; }
+.dashboard-title { -fx-text-fill: #e5fff4; -fx-font-size: 23; -fx-font-weight: bold; }
+.section-title { -fx-text-fill: #defff1; -fx-font-size: 17; -fx-font-weight: bold; -fx-padding: 4 0 0 0; }
+.metric-card { -fx-padding: 22; -fx-background-color: linear-gradient(to bottom, #16b88b, #00613f); -fx-background-radius: 7; }
+.metric-category { -fx-text-fill: #a2ead0; -fx-font-size: 10; -fx-font-weight: bold; }
+.metric-caption { -fx-text-fill: #9cdec3; -fx-font-size: 9; }
+.metric-value { -fx-text-fill: #edfff5; -fx-font-size: 25; -fx-font-weight: bold; }
+.metric-detail { -fx-text-fill: #b7e9d5; -fx-font-size: 9; }
+.progress-bar { -fx-pref-height: 9; -fx-padding: 0; }
+.progress-bar .track { -fx-background-color: #348466; -fx-background-radius: 2; }
+.progress-bar .bar { -fx-background-color: #6ac3a0; -fx-background-radius: 2; -fx-background-insets: 0; -fx-padding: 3; }
+.operation-card { -fx-padding: 24; -fx-background-radius: 7; -fx-background-color: linear-gradient(to bottom right, #42c99d, #9df4d4); }
+.remove-card { -fx-background-color: linear-gradient(to bottom right, #1bb98e, #a4f0d2); }
+.operation-icon { -fx-background-color: #00885f; -fx-background-radius: 8; }
+.line-icon { -fx-fill: transparent; -fx-stroke: #c2f8dd; -fx-stroke-width: 1.5; -fx-stroke-line-cap: round; -fx-stroke-line-join: round; }
+.operation-title { -fx-text-fill: #004b36; -fx-font-size: 18; -fx-font-weight: bold; }
+.primary-action, .danger-action { -fx-alignment: center-left; -fx-text-fill: white; -fx-background-color: #006848; -fx-background-radius: 5; -fx-padding: 13 15; -fx-font-size: 12; -fx-cursor: hand; }
+.danger-action { -fx-background-color: #bf2529; }
+.primary-action:hover, .danger-action:hover { -fx-opacity: .88; }
+.primary-action:focused, .danger-action:focused, .avatar:focused { -fx-border-color: #d3ffed; -fx-border-radius: 5; }
+.dialog-pane { -fx-font-family: "Arial"; -fx-background-color: #e5fff3; }
