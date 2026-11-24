@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="rootShell"
+            prefWidth="1280.0" prefHeight="800.0"
+            style="-fx-background-color: linear-gradient(to bottom right, #065f46, #047857);"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.govipos.cashier.shell.CashierShellController">
+
+    <!-- Top Header Bar Placeholder (Branch info, Change Role, Refund, Online status, Sync queue) -->
+    <top>
+        <HBox fx:id="topBar" prefHeight="56.0" alignment="CENTER_LEFT" spacing="12.0"
+              style="-fx-background-color: #0d7a5f; -fx-border-color: #34d399; -fx-border-width: 0 0 2 0;">
+            <padding>
+                <Insets top="8.0" right="16.0" bottom="8.0" left="16.0"/>
+            </padding>
+        </HBox>
+    </top>
+
+    <!-- Left Column: Transaction Mode Selector & Active Schemes Display -->
+    <left>
+        <VBox prefWidth="310.0" spacing="16.0">
+            <padding>
+                <Insets top="16.0" right="8.0" bottom="16.0" left="16.0"/>
+            </padding>
+            <StackPane fx:id="txModePane" prefHeight="200.0"
+                       style="-fx-background-color: rgba(6, 78, 59, 0.75); -fx-background-radius: 12;"/>
+            <StackPane fx:id="schemesPane" VBox.vgrow="ALWAYS"
+                       style="-fx-background-color: rgba(16, 185, 129, 0.25); -fx-background-radius: 12;"/>
+        </VBox>
+    </left>
+
+    <!-- Center/Right Column: Product Scan + Customer + Checkout Table & Payment Summary -->
+    <center>
+        <VBox spacing="16.0">
+            <padding>
+                <Insets top="16.0" right="16.0" bottom="16.0" left="8.0"/>
+            </padding>
+            <StackPane fx:id="checkoutPane" VBox.vgrow="ALWAYS"
+                       style="-fx-background-color: rgba(255, 255, 255, 0.95); -fx-background-radius: 12;"/>
+            <StackPane fx:id="paymentPane" prefHeight="190.0"
+                       style="-fx-background-color: #ffffff; -fx-background-radius: 12;"/>
+        </VBox>
+    </center>
+
+</BorderPane>
