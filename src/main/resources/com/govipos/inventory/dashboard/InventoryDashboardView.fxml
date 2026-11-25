@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Ellipse?>
+<?import javafx.scene.shape.SVGPath?>
+
+<VBox fx:id="centralContainer"
+      spacing="32.0"
+      fillWidth="true"
+      maxHeight="-Infinity"
+      styleClass="central-panel"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.govipos.inventory.dashboard.InventoryDashboardController">
+
+    <!-- Top Command Strip & Station Info (Node 2:2991) -->
+    <VBox>
+        <padding>
+            <Insets bottom="8.0"/>
+        </padding>
+        <Label text="Central Inventory Operations" minHeight="40.0" styleClass="section-heading"/>
+    </VBox>
+
+    <!-- Quick Warehouse Summary Stat Ribbon (Node 2:3022) -->
+    <StackPane fx:id="statRibbon" styleClass="stat-ribbon">
+        <StackPane fx:id="statRibbonInner">
+            <!-- Blurred Glow Overlays (Nodes 2:3023 & 2:3026) -->
+            <Pane fx:id="ribbonGlowLayer" mouseTransparent="true" minWidth="0.0" minHeight="0.0" prefWidth="0.0" prefHeight="0.0">
+                <Circle fx:id="ribbonGlowRight" radius="128.0" fill="#006c4926" managed="false"/>
+                <Ellipse fx:id="ribbonGlowCenter" radiusX="100.43" radiusY="160.0" fill="#6ffbbe1a" managed="false"/>
+            </Pane>
+
+            <!-- 3 Summary Stat Cards (Node 2:3047) -->
+            <HBox spacing="16.0" alignment="TOP_CENTER">
+                <padding>
+                    <Insets top="28.0" right="32.0" bottom="28.0" left="32.0"/>
+                </padding>
+
+                <!-- Card 1: Active batches (Node 2:3048) -->
+                <StackPane HBox.hgrow="ALWAYS" minWidth="0.0" prefWidth="0.0" maxWidth="Infinity" styleClass="stat-card">
+                    <VBox spacing="0.0">
+                        <Label text="ACTIVE BATCHES" minHeight="16.0" styleClass="stat-caption"/>
+                        <HBox alignment="BASELINE_LEFT" spacing="8.0" minHeight="40.0">
+                            <VBox.margin>
+                                <Insets top="8.0"/>
+                            </VBox.margin>
+                            <Label fx:id="activeBatchesValueLabel" text="1,420" minHeight="40.0" styleClass="stat-value"/>
+                        </HBox>
+                    </VBox>
+                </StackPane>
+
+                <!-- Card 2: Low Count Alerts (Node 2:3062) -->
+                <StackPane HBox.hgrow="ALWAYS" minWidth="0.0" prefWidth="0.0" maxWidth="Infinity" styleClass="stat-card-alert">
+                    <VBox spacing="0.0">
+                        <Label text="LOW COUNT ALERTS" minHeight="16.0" styleClass="stat-caption-alert"/>
+                        <HBox alignment="BASELINE_LEFT" spacing="8.0" minHeight="40.0">
+                            <VBox.margin>
+                                <Insets top="8.0"/>
+                            </VBox.margin>
+                            <Label fx:id="lowCountValueLabel" text="3" minHeight="40.0" styleClass="stat-value"/>
+                            <StackPane fx:id="needsPoBadge" maxHeight="-Infinity" styleClass="needs-po-badge">
+                                <Label text="Needs PO" styleClass="needs-po-text"/>
+                            </StackPane>
+                        </HBox>
+                    </VBox>
+                </StackPane>
+
+                <!-- Card 3: Batches Expired (Node 2:3077) -->
+                <StackPane HBox.hgrow="ALWAYS" minWidth="0.0" prefWidth="0.0" maxWidth="Infinity" styleClass="stat-card">
+                    <VBox spacing="0.0">
+                        <Label text="BATCHES EXPIRED" minHeight="16.0" styleClass="stat-caption"/>
+                        <HBox alignment="BASELINE_CENTER" spacing="8.0" minHeight="40.0">
+                            <VBox.margin>
+                                <Insets top="8.0"/>
+                            </VBox.margin>
+                            <Label fx:id="expiredBatchesValueLabel" text="2" minHeight="40.0" styleClass="stat-value"/>
+                        </HBox>
+                    </VBox>
+                </StackPane>
+            </HBox>
+        </StackPane>
+    </StackPane>
+
+    <!-- Main Navigation Architecture: 3 Large Clickable Primary Cards (Node 2:3105) -->
+    <HBox spacing="24.0" alignment="TOP_CENTER">
+
+        <!-- Action Card 1: Add GRNs (Node 2:3116) -->
+        <StackPane fx:id="grnCard" HBox.hgrow="ALWAYS" minWidth="0.0" prefWidth="0.0" maxWidth="Infinity" maxHeight="-Infinity" styleClass="action-card">
+            <StackPane fx:id="grnCardInner" alignment="TOP_LEFT">
+                <Pane fx:id="grnGlowLayer" mouseTransparent="true" minWidth="0.0" minHeight="0.0" prefWidth="0.0" prefHeight="0.0">
+                    <Circle fx:id="grnGlowCircle" radius="72.0" fill="#6ffbbe33" managed="false"/>
+                </Pane>
+                <VBox spacing="10.0" maxHeight="-Infinity">
+                    <padding>
+                        <Insets top="28.0" right="28.0" bottom="28.0" left="28.0"/>
+                    </padding>
+                    <Label text="Add GRNs" minHeight="32.0" styleClass="action-card-title"/>
+                    <VBox>
+                        <padding>
+                            <Insets top="48.0"/>
+                        </padding>
+                        <Button fx:id="openGrnBtn"
+                                text="Open GRN Entry"
+                                contentDisplay="RIGHT"
+                                graphicTextGap="6.0"
+                                onAction="#onOpenGrnEntry"
+                                styleClass="action-btn, action-btn-grn">
+                            <graphic>
+                                <StackPane minWidth="16.0" prefWidth="16.0" maxWidth="16.0"
+                                           minHeight="16.0" prefHeight="16.0" maxHeight="16.0"
+                                           mouseTransparent="true">
+                                    <Group>
+                                        <SVGPath fill="#FFFFFF"
+                                                 content="M10.7833 9.33333H2.66667V10.6667H10.7833L7.05 14.4L8 15.3333L13.3333 10L8 4.66667L7.05 5.6L10.7833 9.33333Z"/>
+                                    </Group>
+                                </StackPane>
+                            </graphic>
+                        </Button>
+                    </VBox>
+                </VBox>
+            </StackPane>
+        </StackPane>
+
+        <!-- Action Card 2: Disposal (Node 2:3156) -->
+        <StackPane fx:id="disposalCard" HBox.hgrow="ALWAYS" minWidth="0.0" prefWidth="0.0" maxWidth="Infinity" maxHeight="-Infinity" styleClass="action-card">
+            <StackPane fx:id="disposalCardInner" alignment="TOP_LEFT">
+                <VBox spacing="0.0" maxHeight="-Infinity">
+                    <padding>
+                        <Insets top="28.0" right="28.0" bottom="28.0" left="28.0"/>
+                    </padding>
+                    <Label text="Disposal" minHeight="32.0" styleClass="action-card-title"/>
+                    <VBox>
+                        <padding>
+                            <Insets top="48.0"/>
+                        </padding>
+                        <Button fx:id="openDisposalBtn"
+                                text="Open Disposal Logs"
+                                contentDisplay="RIGHT"
+                                graphicTextGap="6.0"
+                                onAction="#onOpenDisposalLogs"
+                                styleClass="action-btn, action-btn-disposal">
+                            <graphic>
+                                <StackPane minWidth="16.0" prefWidth="16.0" maxWidth="16.0"
+                                           minHeight="16.0" prefHeight="16.0" maxHeight="16.0"
+                                           mouseTransparent="true">
+                                    <Group>
+                                        <SVGPath fill="#FFFFFF"
+                                                 content="M10.7833 9.33333H2.66667V10.6667H10.7833L7.05 14.4L8 15.3333L13.3333 10L8 4.66667L7.05 5.6L10.7833 9.33333Z"/>
+                                    </Group>
+                                </StackPane>
+                            </graphic>
+                        </Button>
+                    </VBox>
+                </VBox>
+            </StackPane>
+        </StackPane>
+
+        <!-- Action Card 3: Low Count (Node 2:3197) -->
+        <StackPane fx:id="lowCountCard" HBox.hgrow="ALWAYS" minWidth="0.0" prefWidth="0.0" maxWidth="Infinity" maxHeight="-Infinity" styleClass="action-card">
+            <StackPane fx:id="lowCountCardInner" alignment="TOP_LEFT">
+                <VBox spacing="0.0" maxHeight="-Infinity">
+                    <padding>
+                        <Insets top="28.0" right="28.0" bottom="28.0" left="28.0"/>
+                    </padding>
+                    <Label text="Low Count" minHeight="32.0" styleClass="action-card-title"/>
+                    <VBox>
+                        <padding>
+                            <Insets top="48.0"/>
+                        </padding>
+                        <Button fx:id="reviewShortagesBtn"
+                                text="Review Shortages"
+                                contentDisplay="RIGHT"
+                                graphicTextGap="6.0"
+                                onAction="#onReviewShortages"
+                                styleClass="action-btn, action-btn-low">
+                            <graphic>
+                                <StackPane minWidth="16.0" prefWidth="16.0" maxWidth="16.0"
+                                           minHeight="16.0" prefHeight="16.0" maxHeight="16.0"
+                                           mouseTransparent="true">
+                                    <Group>
+                                        <SVGPath fill="#FFFFFF"
+                                                 content="M10.7833 9.33333H2.66667V10.6667H10.7833L7.05 14.4L8 15.3333L13.3333 10L8 4.66667L7.05 5.6L10.7833 9.33333Z"/>
+                                    </Group>
+                                </StackPane>
+                            </graphic>
+                        </Button>
+                    </VBox>
+                </VBox>
+            </StackPane>
+        </StackPane>
+
+    </HBox>
+
+</VBox>

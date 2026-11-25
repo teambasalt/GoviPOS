@@ -1,0 +1,267 @@
+/* ---------- GoviPOS Inventory Manager Dashboard Stylesheet ---------- */
+
+.root-pane {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%,
+        #0f5132 0%, #108b5e 36.26%, #10b981 88.13%);
+}
+
+.scroll-pane,
+.scroll-pane > .viewport,
+.scroll-pane .corner {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.scroll-pane .scroll-bar {
+    -fx-opacity: 0.6;
+}
+
+/* ---------- Header (Node 2:3273) ---------- */
+.header-bar {
+    -fx-background-color: #047857;
+    -fx-border-color: transparent transparent #ffffff transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-effect: dropshadow(gaussian, rgba(15, 81, 50, 0.06), 8, 0, 0, 1);
+    -fx-padding: 0 32 0 32;
+}
+
+.logo-box {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(15, 81, 50, 0.25), 8, 0, 0, 2);
+}
+
+.brand-title {
+    -fx-font-family: "Space Grotesk", "Segoe UI", sans-serif;
+    -fx-font-weight: 700;
+    -fx-font-size: 18px;
+    -fx-text-fill: #ffffff;
+}
+
+.brand-subtitle {
+    -fx-font-family: "Manrope", "Segoe UI", sans-serif;
+    -fx-font-weight: 600;
+    -fx-font-size: 12px;
+    -fx-text-fill: #ffffff;
+}
+
+.header-divider {
+    -fx-background-color: #e4e9e6;
+}
+
+.branch-pill {
+    -fx-background-color: #eaefec;
+    -fx-background-radius: 9999;
+    -fx-padding: 6 12 6 12;
+}
+
+.branch-pill-text {
+    -fx-font-family: "Manrope", "Segoe UI", sans-serif;
+    -fx-font-weight: 600;
+    -fx-font-size: 12px;
+    -fx-text-fill: #171d1b;
+}
+
+.change-role-btn {
+    -fx-background-color: #10b981;
+    -fx-background-radius: 8;
+    -fx-background-insets: 0;
+    -fx-border-color: #e4e9e6;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Space Grotesk", "Segoe UI", sans-serif;
+    -fx-font-weight: 500;
+    -fx-font-size: 12px;
+    -fx-padding: 0 16 0 16;
+    -fx-cursor: hand;
+}
+
+.change-role-btn:hover {
+    -fx-background-color: #19c993;
+}
+
+.change-role-btn:pressed {
+    -fx-background-color: #0ea372;
+}
+
+.role-dropdown-menu {
+    -fx-background-color: #003820;
+    -fx-background-radius: 8;
+    -fx-border-color: #10b981;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-padding: 4 0 4 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 12, 0, 0, 4);
+}
+
+.role-dropdown-menu .menu-item {
+    -fx-background-color: transparent;
+    -fx-padding: 8 16 8 16;
+}
+
+.role-dropdown-menu .menu-item .label {
+    -fx-font-family: "Manrope", "Segoe UI", sans-serif;
+    -fx-font-weight: 600;
+    -fx-font-size: 12px;
+    -fx-text-fill: #ffffff;
+}
+
+.role-dropdown-menu .menu-item:focused,
+.role-dropdown-menu .menu-item:hover {
+    -fx-background-color: #10b981;
+}
+
+.role-dropdown-menu .menu-item:focused .label,
+.role-dropdown-menu .menu-item:hover .label {
+    -fx-text-fill: #ffffff;
+}
+
+.officer-name {
+    -fx-font-family: "Manrope", "Segoe UI", sans-serif;
+    -fx-font-weight: 700;
+    -fx-font-size: 12px;
+    -fx-text-fill: #ffffff;
+}
+
+.officer-role {
+    -fx-font-family: "Manrope", "Segoe UI", sans-serif;
+    -fx-font-weight: 500;
+    -fx-font-size: 11px;
+    -fx-text-fill: #ffffff;
+}
+
+.avatar-circle {
+    -fx-background-color: #003820;
+    -fx-background-radius: 9999;
+    -fx-cursor: hand;
+}
+
+/* ---------- Central Inventory Operations Container (Node 2:2989) ---------- */
+.central-panel {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 60%, #10b981 0%, #0f5132 100%);
+    -fx-padding: 32 56 32 56;
+}
+
+.section-heading {
+    -fx-font-family: "Inter", "Segoe UI", sans-serif;
+    -fx-font-weight: 700;
+    -fx-font-size: 30px;
+    -fx-text-fill: #ffffff;
+}
+
+/* ---------- Quick Warehouse Summary Stat Ribbon (Node 2:3022) ---------- */
+.stat-ribbon {
+    -fx-background-color: linear-gradient(to right, #003820 0%, #0f5132 50%, #003825 100%);
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 1.0), 20, 0, 5, 8);
+}
+
+.stat-card {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-background-radius: 12;
+    -fx-padding: 16;
+    -fx-cursor: hand;
+}
+
+.stat-card:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.09);
+}
+
+.stat-card-alert {
+    -fx-background-color: rgba(186, 26, 26, 0.15);
+    -fx-background-radius: 12;
+    -fx-padding: 16;
+}
+
+.stat-card-alert:hover {
+    -fx-background-color: rgba(186, 26, 26, 0.22);
+}
+
+.stat-caption {
+    -fx-font-family: "Manrope", "Segoe UI", sans-serif;
+    -fx-font-weight: 600;
+    -fx-font-size: 12px;
+    -fx-text-fill: rgba(255, 255, 255, 0.70);
+}
+
+.stat-caption-alert {
+    -fx-font-family: "Manrope", "Segoe UI", sans-serif;
+    -fx-font-weight: 600;
+    -fx-font-size: 12px;
+    -fx-text-fill: #ffdad6;
+}
+
+.stat-value {
+    -fx-font-family: "Space Grotesk", "Segoe UI", sans-serif;
+    -fx-font-weight: 700;
+    -fx-font-size: 36px;
+    -fx-text-fill: #ffffff;
+}
+
+.needs-po-badge {
+    -fx-background-color: rgba(186, 26, 26, 0.30);
+    -fx-background-radius: 4;
+    -fx-padding: 2 6 2 6;
+}
+
+.needs-po-text {
+    -fx-font-family: "Manrope", "Segoe UI", sans-serif;
+    -fx-font-weight: 700;
+    -fx-font-size: 12px;
+    -fx-text-fill: #ffdad6;
+}
+
+/* ---------- Main Navigation Architecture: 3 Primary Action Cards (Node 2:3105) ---------- */
+.action-card {
+    -fx-background-color: #047857;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.40), 20, 0.1, 2, 5);
+    -fx-cursor: hand;
+}
+
+.action-card:hover {
+    -fx-background-color: #06875f;
+    -fx-translate-y: -2;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.48), 24, 0.1, 2, 8);
+}
+
+.action-card-title {
+    -fx-font-family: "Inter", "Segoe UI", sans-serif;
+    -fx-font-weight: 700;
+    -fx-font-size: 24px;
+    -fx-text-fill: #ffffff;
+}
+
+.action-btn {
+    -fx-background-radius: 12;
+    -fx-background-insets: 0;
+    -fx-padding: 10 16 10 16;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Space Grotesk", "Segoe UI", sans-serif;
+    -fx-font-weight: 700;
+    -fx-font-size: 12px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 2, 0, 0, 1);
+}
+
+.action-btn-grn {
+    -fx-background-color: #003820;
+}
+
+.action-btn-disposal {
+    -fx-background-color: #003825;
+}
+
+.action-btn-low {
+    -fx-background-color: #0f5132;
+}
+
+.action-btn:hover {
+    -fx-background-color: #00553a;
+}
+
+.action-btn:pressed {
+    -fx-background-color: #002a18;
+}
